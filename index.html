@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Planner PWA</title>
+    <title>Strategic Planner</title>
     
     <!-- PWA Manifest (Embedded) -->
     <link rel="manifest" id="manifest-placeholder">
@@ -151,6 +151,11 @@
             const handleAddBsc = (item) => setBsc(DataService.add('strat_bsc', item));
             const handleDeleteBsc = (id) => setBsc(DataService.delete('strat_bsc', id));
 
+            const handleNav = (tab) => {
+                setActiveTab(tab);
+                setIsSidebarOpen(false);
+            };
+
             if (loading) return <div className="flex items-center justify-center h-screen bg-slate-50 text-slate-500">Loading PWA...</div>;
 
             return (
@@ -168,12 +173,12 @@
                         </div>
                         
                         <nav className="p-4 space-y-2">
-                            <NavButton active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} icon={<Icons.LayoutDashboard size={20} />}>Dashboard</NavButton>
-                            <NavButton active={activeTab === 'swot'} onClick={() => setActiveTab('swot')} icon={<Icons.Target size={20} />}>SWOT Analysis</NavButton>
-                            <NavButton active={activeTab === 'bsc'} onClick={() => setActiveTab('bsc')} icon={<Icons.PieChart size={20} />}>Balanced Scorecard</NavButton>
-                            <NavButton active={activeTab === 'paps'} onClick={() => setActiveTab('paps')} icon={<Icons.ClipboardList size={20} />}>PAPs Management</NavButton>
-                            <NavButton active={activeTab === 'team'} onClick={() => setActiveTab('team')} icon={<Icons.Users size={20} />}>Team & Governance</NavButton>
-                            <NavButton active={activeTab === 'report'} onClick={() => setActiveTab('report')} icon={<Icons.FileText size={20} />}>Strategic Plan View</NavButton>
+                            <NavButton active={activeTab === 'dashboard'} onClick={() => handleNav('dashboard')} icon={<Icons.LayoutDashboard size={20} />}>Dashboard</NavButton>
+                            <NavButton active={activeTab === 'swot'} onClick={() => handleNav('swot')} icon={<Icons.Target size={20} />}>SWOT Analysis</NavButton>
+                            <NavButton active={activeTab === 'bsc'} onClick={() => handleNav('bsc')} icon={<Icons.PieChart size={20} />}>Balanced Scorecard</NavButton>
+                            <NavButton active={activeTab === 'paps'} onClick={() => handleNav('paps')} icon={<Icons.ClipboardList size={20} />}>PAPs Management</NavButton>
+                            <NavButton active={activeTab === 'team'} onClick={() => handleNav('team')} icon={<Icons.Users size={20} />}>Team & Governance</NavButton>
+                            <NavButton active={activeTab === 'report'} onClick={() => handleNav('report')} icon={<Icons.FileText size={20} />}>Strategic Plan View</NavButton>
                         </nav>
                         
                         <div className="absolute bottom-0 w-full p-6 border-t border-slate-700">
@@ -210,7 +215,7 @@
 
         const NavButton = ({ active, onClick, icon, children }) => (
             <button 
-                onClick={() => { onClick(); window.scrollTo(0,0); setIsSidebarOpen && setIsSidebarOpen(false); }}
+                onClick={() => { onClick(); window.scrollTo(0,0); }}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                 active ? 'bg-blue-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                 }`}
